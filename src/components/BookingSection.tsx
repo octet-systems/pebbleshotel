@@ -28,17 +28,17 @@ const BookingSection = () => {
       Math.ceil((new Date(formData.checkOut).getTime() - new Date(formData.checkIn).getTime()) / (1000 * 60 * 60 * 24)) : 1;
     
     const roomPrices = {
-      deluxe: 280,
-      premium: 320,
-      suite: 450
+      deluxe: 420000,
+      premium: 480000,
+      suite: 675000
     };
     
-    const roomPrice = roomPrices[formData.roomType as keyof typeof roomPrices] || 280;
+    const roomPrice = roomPrices[formData.roomType as keyof typeof roomPrices] || 420000;
     const totalAmount = roomPrice * totalNights;
     
     toast({
       title: "Booking Confirmed!",
-      description: `Booking ID: ${bookingId} | Total: $${totalAmount} for ${totalNights} night(s). We'll call +265 999 771 155 to confirm payment.`,
+      description: `Booking ID: ${bookingId} | Total: MK ${totalAmount.toLocaleString()} for ${totalNights} night(s). We'll call +265 999 771 155 to confirm payment.`,
     });
     
     // Reset form
@@ -129,9 +129,9 @@ const BookingSection = () => {
                       <SelectValue placeholder="Select room type" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="deluxe">Deluxe Room - $280/night</SelectItem>
-                      <SelectItem value="premium">Premium Room - $320/night</SelectItem>
-                      <SelectItem value="suite">Luxury Suite - $450/night</SelectItem>
+                      <SelectItem value="deluxe">Deluxe Room - MK 420,000/night</SelectItem>
+                      <SelectItem value="premium">Premium Room - MK 480,000/night</SelectItem>
+                      <SelectItem value="suite">Luxury Suite - MK 675,000/night</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>

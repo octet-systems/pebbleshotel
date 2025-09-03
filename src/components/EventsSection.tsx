@@ -25,7 +25,7 @@ const EventsSection = () => {
       time: '8:00 AM - 6:00 PM',
       location: 'Cape Maclear',
       capacity: '20 guests',
-      price: '$85 per person',
+      price: 'MK 127,500 per person',
       category: 'Adventure',
       featured: true
     },
@@ -37,7 +37,7 @@ const EventsSection = () => {
       time: '6:30 PM - 9:30 PM',
       location: 'Boutique Lounge',
       capacity: '30 guests',
-      price: '$25 per person',
+      price: 'MK 37,500 per person',
       category: 'Art & Culture',
       featured: false
     },
@@ -49,7 +49,7 @@ const EventsSection = () => {
       time: '9:00 AM - 4:00 PM',
       location: 'Dedza (45 min drive)',
       capacity: '15 guests',
-      price: '$60 per person',
+      price: 'MK 90,000 per person',
       category: 'Workshop',
       featured: false
     },
@@ -61,7 +61,7 @@ const EventsSection = () => {
       time: '10:00 AM - 3:00 PM',
       location: 'Lilongwe City',
       capacity: '25 guests',
-      price: '$35 per person',
+      price: 'MK 52,500 per person',
       category: 'Sightseeing',
       featured: false
     },
@@ -73,7 +73,7 @@ const EventsSection = () => {
       time: '11:00 AM - 2:00 PM',
       location: 'Hotel Kitchen',
       capacity: '12 guests',
-      price: '$40 per person',
+      price: 'MK 60,000 per person',
       category: 'Culinary',
       featured: true
     }
