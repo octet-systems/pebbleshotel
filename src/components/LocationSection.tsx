@@ -4,24 +4,24 @@ import { MapPin, Clock, Car, Plane } from 'lucide-react';
 const LocationSection = () => {
   const attractions = [
     {
-      name: 'Area 49 Nature Reserve',
-      distance: '2 km',
-      description: 'Pristine wilderness with hiking trails and wildlife viewing opportunities.'
+      name: 'Lilongwe Wildlife Centre',
+      distance: '12 km',
+      description: 'A sanctuary for rescued and orphaned wildlife, perfect for nature lovers.'
     },
     {
-      name: 'Historic Downtown District',
+      name: 'City Centre Markets',
       distance: '5 km',
-      description: 'Charming streets filled with boutique shops, galleries, and local restaurants.'
+      description: 'Vibrant shopping districts, local markets, and traditional crafts.'
     },
     {
-      name: 'Sunset Peak Observatory',
-      distance: '15 km',
-      description: 'World-class astronomical observatory with stunning panoramic views.'
+      name: 'Kamuzu Mausoleum',
+      distance: '7 km',
+      description: 'Historic site honoring Malawi\'s first president with beautiful gardens.'
     },
     {
-      name: 'Area 49 Cultural Center',
+      name: 'Nature Sanctuary',
       distance: '8 km',
-      description: 'Modern arts center featuring exhibitions, performances, and workshops.'
+      description: 'A peaceful forest reserve with walking trails and bird watching.'
     }
   ];
 
@@ -29,20 +29,20 @@ const LocationSection = () => {
     {
       icon: Plane,
       title: 'Airport',
-      description: 'Area 49 International Airport',
-      distance: '25 minutes drive'
+      description: 'Kamuzu International Airport',
+      distance: '45 minutes drive'
     },
     {
       icon: Car,
       title: 'City Center',
-      description: 'Downtown Area 49',
-      distance: '10 minutes drive'
+      description: 'Lilongwe Old Town & Capital City',
+      distance: '8 minutes drive'
     },
     {
       icon: Clock,
-      title: 'Train Station',
-      description: 'Area 49 Central Station',
-      distance: '15 minutes drive'
+      title: 'Bus Station',
+      description: 'Lilongwe Bus Depot',
+      distance: '12 minutes drive'
     }
   ];
 
@@ -51,10 +51,10 @@ const LocationSection = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
-            Location & Attractions
+            Discover Lilongwe
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-balance">
-            Perfectly positioned in the heart of Area 49, our hotel offers easy access to the region's finest attractions and experiences.
+            Experience the heart of Malawi's capital city. From vibrant markets to peaceful gardens, discover the warm hospitality of the Warm Heart of Africa.
           </p>
         </div>
 
@@ -68,8 +68,8 @@ const LocationSection = () => {
                   <h3 className="text-2xl font-playfair font-semibold mb-2">
                     Pebbles Boutique Hotels
                   </h3>
-                  <p className="text-lg">123 Serenity Boulevard</p>
-                  <p className="text-lg">Area 49, State 12345</p>
+                   <p className="text-lg">Mangochi Road, Area 49</p>
+                   <p className="text-lg">Lilongwe, Malawi</p>
                 </div>
               </div>
             </Card>
@@ -139,19 +139,19 @@ const LocationSection = () => {
                 Contact Information
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-center">
-                <div>
-                  <h4 className="font-semibold text-foreground mb-2">Address</h4>
-                  <p className="text-muted-foreground">
-                    123 Serenity Boulevard<br />
-                    Area 49, State 12345
-                  </p>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-foreground mb-2">Phone</h4>
-                  <p className="text-muted-foreground">
-                    +1 (555) 123-4567
-                  </p>
-                </div>
+                 <div>
+                   <h4 className="font-semibold text-foreground mb-2">Address</h4>
+                   <p className="text-muted-foreground">
+                     Mangochi Road, Area 49<br />
+                     Lilongwe, Malawi
+                   </p>
+                 </div>
+                 <div>
+                   <h4 className="font-semibold text-foreground mb-2">Phone</h4>
+                   <p className="text-muted-foreground">
+                     +265 999 771 155
+                   </p>
+                 </div>
               </div>
             </CardContent>
           </Card>

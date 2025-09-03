@@ -30,7 +30,7 @@ const ContactSection = () => {
     {
       icon: Phone,
       title: 'Phone',
-      details: '+1 (555) 123-4567',
+      details: '+265 999 771 155',
       subtext: 'Available 24/7'
     },
     {
@@ -42,8 +42,8 @@ const ContactSection = () => {
     {
       icon: MapPin,
       title: 'Address',
-      details: '123 Serenity Boulevard',
-      subtext: 'Area 49, State 12345'
+      details: 'Mangochi Road, Area 49',
+      subtext: 'Lilongwe, Malawi'
     }
   ];
 

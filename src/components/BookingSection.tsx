@@ -21,9 +21,35 @@ const BookingSection = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Simulate booking logic
+    const bookingId = Math.random().toString(36).substr(2, 9).toUpperCase();
+    const totalNights = formData.checkIn && formData.checkOut ? 
+      Math.ceil((new Date(formData.checkOut).getTime() - new Date(formData.checkIn).getTime()) / (1000 * 60 * 60 * 24)) : 1;
+    
+    const roomPrices = {
+      deluxe: 280,
+      premium: 320,
+      suite: 450
+    };
+    
+    const roomPrice = roomPrices[formData.roomType as keyof typeof roomPrices] || 280;
+    const totalAmount = roomPrice * totalNights;
+    
     toast({
-      title: "Booking Request Submitted",
-      description: "We'll contact you shortly to confirm your reservation.",
+      title: "Booking Confirmed!",
+      description: `Booking ID: ${bookingId} | Total: $${totalAmount} for ${totalNights} night(s). We'll call +265 999 771 155 to confirm payment.`,
+    });
+    
+    // Reset form
+    setFormData({
+      checkIn: '',
+      checkOut: '',
+      guests: '',
+      roomType: '',
+      name: '',
+      email: '',
+      phone: ''
     });
   };
 
