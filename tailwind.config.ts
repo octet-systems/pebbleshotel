@@ -1,4 +1,5 @@
-import type { Config } from "tailwindcss";
+import tailwindcssAnimate from "tailwindcss-animate";
+import aspectRatio from "@tailwindcss/aspect-ratio";
 
 export default {
 	darkMode: ["class"],
@@ -12,10 +13,32 @@ export default {
 	theme: {
 		container: {
 			center: true,
-			padding: '2rem',
+			padding: {
+				DEFAULT: '1rem',
+				sm: '1.5rem',
+				md: '2rem',
+				lg: '2.5rem',
+				xl: '3rem'
+			},
 			screens: {
+				sm: '640px',
+				md: '768px',
+				lg: '1024px',
+				xl: '1280px',
 				'2xl': '1400px'
 			}
+		},
+		screens: {
+			'xs': '475px',
+			'sm': '640px',
+			'md': '768px',
+			'lg': '1024px',
+			'xl': '1280px',
+			'2xl': '1536px',
+			// Custom breakpoints for hotel website
+			'mobile': {'max': '767px'},
+			'tablet': {'min': '768px', 'max': '1023px'},
+			'desktop': {'min': '1024px'}
 		},
 		extend: {
 			fontFamily: {
@@ -78,7 +101,31 @@ export default {
 					light: 'hsl(var(--sage-light))'
 				},
 				cream: 'hsl(var(--cream))',
-				earth: 'hsl(var(--earth))'
+				earth: 'hsl(var(--earth))',
+				gold: {
+					100: '#F9F5EB',
+					200: '#EADBC8',
+					300: '#DAC0A3',
+					400: '#C6A96C',
+					500: '#B0925A',
+					600: '#9A7C4D',
+					700: '#7C6536',
+					800: '#5E4C29',
+					900: '#40351C',
+				},
+				charcoal: {
+					50: '#f6f6f6',
+					100: '#e7e7e7',
+					200: '#d1d1d1',
+					300: '#b0b0b0',
+					400: '#888888',
+					500: '#6d6d6d',
+					600: '#5d5d5d',
+					700: '#4f4f4f',
+					800: '#454545',
+					900: '#3d3d3d',
+					950: '#0F0F0F',
+				}
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -105,9 +152,36 @@ export default {
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'fade-in': 'fadeIn 0.5s ease-in-out',
+				'slide-in-up': 'slideInUp 0.6s ease-out',
+				'slide-in-down': 'slideInDown 0.6s ease-out',
+				'scale-in': 'scaleIn 0.3s ease-out',
+				'bounce-subtle': 'bounceSubtle 2s infinite',
+				'bounce-slow': 'bounce 3s infinite',
+			},
+			spacing: {
+				'18': '4.5rem',
+				'22': '5.5rem',
+				'26': '6.5rem',
+				'30': '7.5rem',
+				'34': '8.5rem',
+				'38': '9.5rem'
+			},
+			minHeight: {
+				'screen-small': '100svh',
+				'screen-large': '100lvh'
+			},
+			maxWidth: {
+				'8xl': '88rem',
+				'9xl': '96rem'
+			},
+			gridTemplateColumns: {
+				'auto-fit-sm': 'repeat(auto-fit, minmax(200px, 1fr))',
+				'auto-fit-md': 'repeat(auto-fit, minmax(300px, 1fr))',
+				'auto-fit-lg': 'repeat(auto-fit, minmax(400px, 1fr))'
 			}
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [tailwindcssAnimate, aspectRatio],
 } satisfies Config;

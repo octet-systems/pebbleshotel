@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { MapPin, Phone, Mail, Facebook, Instagram, Twitter } from 'lucide-react';
 
 const Footer = () => {
@@ -5,19 +6,19 @@ const Footer = () => {
 
   const footerLinks = {
     hotel: [
-      { name: 'About Us', href: '#' },
-      { name: 'Our Story', href: '#' },
+      { name: 'About Us', href: '/about' },
+      { name: 'Our Story', href: '/about' },
       { name: 'Awards', href: '#' },
       { name: 'Careers', href: '#' }
     ],
     services: [
-      { name: 'Rooms & Suites', href: '#rooms' },
-      { name: 'Dining', href: '#' },
-      { name: 'Spa & Wellness', href: '#amenities' },
-      { name: 'Events', href: '#' }
+      { name: 'Rooms & Suites', href: '/rooms' },
+      { name: 'Dining', href: '/services' },
+      { name: 'Spa & Wellness', href: '/services' },
+      { name: 'Events', href: '/events' }
     ],
     support: [
-      { name: 'Contact Us', href: '#contact' },
+      { name: 'Contact Us', href: '/contact' },
       { name: 'Privacy Policy', href: '#' },
       { name: 'Terms of Service', href: '#' },
       { name: 'FAQs', href: '#' }
@@ -31,27 +32,27 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-primary-dark text-primary-foreground">
+    <footer className="bg-primary text-primary-foreground">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Hotel Info */}
           <div className="lg:col-span-1">
             <h3 className="text-3xl font-playfair font-bold mb-4">Pebbles</h3>
-            <p className="text-primary-light mb-6 leading-relaxed">
+            <p className="text-primary-foreground/80 mb-6 leading-relaxed">
               Experience serene luxury in the heart of Area 49. Where modern elegance meets tranquil sophistication.
             </p>
             
             <div className="space-y-3">
               <div className="flex items-center gap-3">
-                <MapPin className="w-5 h-5 text-sage-light" />
+                <MapPin className="w-5 h-5 text-muted-foreground" />
                 <span className="text-sm">123 Serenity Boulevard, Area 49</span>
               </div>
               <div className="flex items-center gap-3">
-                <Phone className="w-5 h-5 text-sage-light" />
+                <Phone className="w-5 h-5 text-muted-foreground" />
                 <span className="text-sm">+1 (555) 123-4567</span>
               </div>
               <div className="flex items-center gap-3">
-                <Mail className="w-5 h-5 text-sage-light" />
+                <Mail className="w-5 h-5 text-muted-foreground" />
                 <span className="text-sm">reservations@pebblesboutique.com</span>
               </div>
             </div>
@@ -63,12 +64,21 @@ const Footer = () => {
             <ul className="space-y-2">
               {footerLinks.hotel.map((link) => (
                 <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="text-primary-light hover:text-white transition-smooth text-sm"
-                  >
-                    {link.name}
-                  </a>
+                  {link.href.startsWith('/') ? (
+                    <Link
+                      to={link.href}
+                      className="text-primary-foreground/80 hover:text-white transition-smooth text-sm"
+                    >
+                      {link.name}
+                    </Link>
+                  ) : (
+                    <a
+                      href={link.href}
+                      className="text-primary-foreground/80 hover:text-white transition-smooth text-sm"
+                    >
+                      {link.name}
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>
@@ -80,12 +90,21 @@ const Footer = () => {
             <ul className="space-y-2">
               {footerLinks.services.map((link) => (
                 <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="text-primary-light hover:text-white transition-smooth text-sm"
-                  >
-                    {link.name}
-                  </a>
+                  {link.href.startsWith('/') ? (
+                    <Link
+                      to={link.href}
+                      className="text-primary-foreground/80 hover:text-white transition-smooth text-sm"
+                    >
+                      {link.name}
+                    </Link>
+                  ) : (
+                    <a
+                      href={link.href}
+                      className="text-primary-foreground/80 hover:text-white transition-smooth text-sm"
+                    >
+                      {link.name}
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>
@@ -97,12 +116,21 @@ const Footer = () => {
             <ul className="space-y-2">
               {footerLinks.support.map((link) => (
                 <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="text-primary-light hover:text-white transition-smooth text-sm"
-                  >
-                    {link.name}
-                  </a>
+                  {link.href.startsWith('/') ? (
+                    <Link
+                      to={link.href}
+                      className="text-primary-foreground/80 hover:text-white transition-smooth text-sm"
+                    >
+                      {link.name}
+                    </Link>
+                  ) : (
+                    <a
+                      href={link.href}
+                      className="text-primary-foreground/80 hover:text-white transition-smooth text-sm"
+                    >
+                      {link.name}
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>
@@ -118,7 +146,7 @@ const Footer = () => {
                   key={social.label}
                   href={social.href}
                   aria-label={social.label}
-                  className="text-primary-light hover:text-white transition-smooth"
+                  className="text-primary-foreground/80 hover:text-white transition-smooth"
                 >
                   <social.icon className="w-6 h-6" />
                 </a>
@@ -126,10 +154,10 @@ const Footer = () => {
             </div>
             
             <div className="text-center md:text-right">
-              <p className="text-primary-light text-sm">
+              <p className="text-primary-foreground/80 text-sm">
                 © {currentYear} Pebbles Boutique Hotels. All rights reserved.
               </p>
-              <p className="text-primary-light text-xs mt-1">
+              <p className="text-primary-foreground/80 text-xs mt-1">
                 Crafted with care for your perfect stay.
               </p>
             </div>

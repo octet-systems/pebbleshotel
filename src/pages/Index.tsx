@@ -11,17 +11,31 @@ import Footer from '@/components/Footer';
 
 const Index = () => {
   return (
-    <div className="min-h-screen scroll-smooth">
+    <div className="min-h-screen scroll-smooth text-rendering-optimized">
       <Navigation />
-      <main>
+      <main id="main-content" role="main" aria-label="Main content">
         <HeroSection />
-        <RoomsSection />
-        <BookingSection />
-        <AmenitiesSection />
-        <GallerySection />
-        <EventsSection />
-        <LocationSection />
-        <ContactSection />
+        <section id="rooms" aria-label="Hotel rooms and accommodations">
+          <RoomsSection />
+        </section>
+        <section id="booking" aria-label="Room booking">
+          <BookingSection />
+        </section>
+        <section id="amenities" aria-label="Hotel amenities and facilities">
+          <AmenitiesSection />
+        </section>
+        <section id="gallery" aria-label="Photo gallery">
+          <GallerySection />
+        </section>
+        <section id="events" aria-label="Events and special occasions">
+          <EventsSection />
+        </section>
+        <section id="location" aria-label="Hotel location and directions">
+          <LocationSection />
+        </section>
+        <section id="contact" aria-label="Contact information">
+          <ContactSection />
+        </section>
       </main>
       <Footer />
     </div>

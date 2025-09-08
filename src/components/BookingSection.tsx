@@ -1,14 +1,22 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { addDays } from 'date-fns';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Calendar, Users, MapPin } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
+import { Calendar, Users, MapPin, Loader2, CreditCard, Shield } from 'lucide-react';
+import { useToast } from '@/components/ui/use-toast';
+import { LoadingSpinner } from '@/components/LoadingComponents';
+import { DatePicker } from '@/components/DatePicker';
+import { useBookingStore } from '@/lib/booking-store';
 
 const BookingSection = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
+  const { rooms, updateCurrentBooking, setSelectedRoom, resetBookingFlow } = useBookingStore();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     checkIn: '',
     checkOut: '',
@@ -19,99 +27,100 @@ const BookingSection = () => {
     phone: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Simulate booking logic
-    const bookingId = Math.random().toString(36).substr(2, 9).toUpperCase();
-    const totalNights = formData.checkIn && formData.checkOut ? 
-      Math.ceil((new Date(formData.checkOut).getTime() - new Date(formData.checkIn).getTime()) / (1000 * 60 * 60 * 24)) : 1;
-    
-    const roomPrices = {
-      deluxe: 420000,
-      premium: 480000,
-      suite: 675000
-    };
-    
-    const roomPrice = roomPrices[formData.roomType as keyof typeof roomPrices] || 420000;
-    const totalAmount = roomPrice * totalNights;
-    
-    toast({
-      title: "Booking Confirmed!",
-      description: `Booking ID: ${bookingId} | Total: MK ${totalAmount.toLocaleString()} for ${totalNights} night(s). We'll call +265 999 771 155 to confirm payment.`,
+    setIsSubmitting(true);
+
+    resetBookingFlow();
+
+    // Find a room that matches the selected type
+    const selectedRoomObject = rooms.find(r => r.roomType === formData.roomType);
+    if (selectedRoomObject) {
+      setSelectedRoom(selectedRoomObject);
+    }
+
+    // Update booking details in the store
+    updateCurrentBooking({
+      checkIn: formData.checkIn ? new Date(formData.checkIn + 'T00:00:00') : new Date(),
+      checkOut: formData.checkOut ? new Date(formData.checkOut + 'T00:00:00') : addDays(new Date(), 1),
+      adultCount: formData.guests ? parseInt(formData.guests, 10) : 1,
+      childrenCount: 0,
+      guests: [{
+        firstName: formData.name.split(' ')[0] || 'Guest',
+        lastName: formData.name.split(' ')[1] || '',
+        email: formData.email,
+        phone: formData.phone,
+        isMainGuest: true,
+      }],
     });
-    
-    // Reset form
-    setFormData({
-      checkIn: '',
-      checkOut: '',
-      guests: '',
-      roomType: '',
-      name: '',
-      email: '',
-      phone: ''
-    });
+
+    // Simulate some processing
+    await new Promise(resolve => setTimeout(resolve, 500));
+
+    setIsSubmitting(false);
+    navigate('/booking-demo');
   };
 
   return (
-    <section className="py-20 bg-background">
+    <section className="py-12 md:py-20 bg-background">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
+        <div className="text-center mb-8 md:mb-12">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-playfair font-bold text-foreground mb-4 text-responsive-lg">
             Reserve Your Stay
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-balance">
+          <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto text-balance text-responsive">
             Plan your perfect escape with our easy booking system. Let us create an unforgettable experience for you.
           </p>
         </div>
 
-        <Card className="shadow-medium">
-          <CardHeader className="bg-sage text-white">
-            <CardTitle className="text-2xl font-playfair text-center">
+        <Card className="shadow-medium mobile-optimized">
+          <CardHeader className="bg-sage text-white p-4 md:p-6">
+            <CardTitle className="text-xl md:text-2xl font-playfair text-center">
               Booking Details
             </CardTitle>
           </CardHeader>
-          <CardContent className="p-8">
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Date Selection */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <CardContent className="p-4 md:p-8">
+            <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
+              {/* Date Selection with Enhanced DatePicker */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                 <div className="space-y-2">
-                  <Label htmlFor="checkin" className="flex items-center gap-2">
+                  <Label htmlFor="checkin" className="flex items-center gap-2 text-sm md:text-base">
                     <Calendar className="w-4 h-4" />
                     Check-in Date
                   </Label>
-                  <Input
-                    id="checkin"
-                    type="date"
+                  <DatePicker
                     value={formData.checkIn}
-                    onChange={(e) => setFormData({ ...formData, checkIn: e.target.value })}
-                    required
+                    onChange={(date) => setFormData({ ...formData, checkIn: date })}
+                    placeholder="Select check-in date"
+                    maxDate={new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().split('T')[0]}
+                    className="w-full"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="checkout" className="flex items-center gap-2">
+                  <Label htmlFor="checkout" className="flex items-center gap-2 text-sm md:text-base">
                     <Calendar className="w-4 h-4" />
                     Check-out Date
                   </Label>
-                  <Input
-                    id="checkout"
-                    type="date"
+                  <DatePicker
                     value={formData.checkOut}
-                    onChange={(e) => setFormData({ ...formData, checkOut: e.target.value })}
-                    required
+                    onChange={(date) => setFormData({ ...formData, checkOut: date })}
+                    placeholder="Select check-out date"
+                    minDate={formData.checkIn || undefined}
+                    maxDate={new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().split('T')[0]}
+                    className="w-full"
                   />
                 </div>
               </div>
 
               {/* Room and Guests */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                 <div className="space-y-2">
-                  <Label htmlFor="guests" className="flex items-center gap-2">
+                  <Label htmlFor="guests" className="flex items-center gap-2 text-sm md:text-base">
                     <Users className="w-4 h-4" />
                     Number of Guests
                   </Label>
                   <Select onValueChange={(value) => setFormData({ ...formData, guests: value })}>
-                    <SelectTrigger>
+                    <SelectTrigger className="touch-target mobile-optimized">
                       <SelectValue placeholder="Select guests" />
                     </SelectTrigger>
                     <SelectContent>
@@ -123,9 +132,9 @@ const BookingSection = () => {
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="roomtype">Room Type</Label>
+                  <Label htmlFor="roomtype" className="text-sm md:text-base">Room Type</Label>
                   <Select onValueChange={(value) => setFormData({ ...formData, roomType: value })}>
-                    <SelectTrigger>
+                    <SelectTrigger className="touch-target mobile-optimized">
                       <SelectValue placeholder="Select room type" />
                     </SelectTrigger>
                     <SelectContent>
@@ -138,38 +147,41 @@ const BookingSection = () => {
               </div>
 
               {/* Guest Information */}
-              <div className="border-t pt-6">
-                <h3 className="text-lg font-playfair font-semibold mb-4">Guest Information</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="border-t pt-4 md:pt-6">
+                <h3 className="text-base md:text-lg font-playfair font-semibold mb-4">Guest Information</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                   <div className="space-y-2">
-                    <Label htmlFor="name">Full Name</Label>
+                    <Label htmlFor="name" className="text-sm md:text-base">Full Name</Label>
                     <Input
                       id="name"
                       placeholder="Enter your full name"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      className="touch-target mobile-optimized"
                       required
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="email">Email Address</Label>
+                    <Label htmlFor="email" className="text-sm md:text-base">Email Address</Label>
                     <Input
                       id="email"
                       type="email"
                       placeholder="Enter your email"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      className="touch-target mobile-optimized"
                       required
                     />
                   </div>
                 </div>
                 <div className="mt-4">
-                  <Label htmlFor="phone">Phone Number</Label>
+                  <Label htmlFor="phone" className="text-sm md:text-base">Phone Number</Label>
                   <Input
                     id="phone"
                     placeholder="Enter your phone number"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    className="touch-target mobile-optimized"
                     required
                   />
                 </div>
@@ -177,9 +189,17 @@ const BookingSection = () => {
 
               <Button 
                 type="submit" 
-                className="w-full bg-primary hover:bg-primary-dark text-primary-foreground text-lg py-3"
+                disabled={isSubmitting}
+                className="w-full bg-primary hover:bg-primary-dark text-primary-foreground text-base md:text-lg py-3 md:py-4 touch-target mobile-optimized btn-modern hover-lift rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Submit Booking Request
+                {isSubmitting ? (
+                  <div className="flex items-center justify-center gap-2">
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    <span>Processing...</span>
+                  </div>
+                ) : (
+                  'Submit Booking Request'
+                )}
               </Button>
             </form>
           </CardContent>
